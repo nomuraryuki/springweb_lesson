@@ -17,11 +17,11 @@ public class webcontroller {
     PgProductService pgProductService;
 
 
-    @GetMapping("product_list")
+    @GetMapping("product-list")
     public String productList(Model model) {
         // ロジックをServiceに任せる
         model.addAttribute("productList", pgProductService.findAll());
-        return "product_list";
+        return "product-list";
     }
 
     @GetMapping("/product/{id}")
