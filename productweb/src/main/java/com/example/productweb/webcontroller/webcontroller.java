@@ -1,14 +1,17 @@
 package com.example.productweb.webcontroller;
 
+import com.example.productweb.entity.InsertProduct;
 import com.example.productweb.entity.ProductRecord;
+import com.example.productweb.form.AddProductForm;
+import com.example.productweb.form.UpdateProductForm;
 import com.example.productweb.service.PgProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class webcontroller {
@@ -28,6 +31,49 @@ public class webcontroller {
     public String product(@PathVariable("id") int id, Model model ){
             model.addAttribute("productId", pgProductService.findById(id));
             return "product";
+    }
+
+    @PostMapping("product/{id}")
+    public String productDelete(@PathVariable("id")int id,Model model) {
+        model.addAttribute("productId", pgProductService.findById(id));
+            pgProductService.delete(id);
+            return "redirect:/product-list";
+    }
+
+    @GetMapping("/product-add")
+    public String index(@ModelAttribute("addProductForm") AddProductForm addProductForm) {
+        return "product-add";
+    }
+    @PostMapping("/product-add")
+    public String addProduct(@Validated @ModelAttribute("addProductForm") AddProductForm addProductForm, BindingResult bindingResult) {
+
+        if(bindingResult.hasErrors()) {
+            return "product-add";
+        }
+        else{
+            var insertProduct = new InsertProduct(addProductForm.getAddProductName(),addProductForm.getAddProductPrice());
+            pgProductService.insert(insertProduct);
+            return "redirect:/product-list";
+        }
+    }
+
+    @GetMapping("product/update/{id}")
+    public String update(@PathVariable("id") int id, @ModelAttribute("updateProductForm")UpdateProductForm updateProductForm, Model model){
+        model.addAttribute("productId", pgProductService.findById(id));
+        return "update";
+    }
+
+    @PostMapping("product/update/{id}")
+    public String updatePost(@PathVariable("id")int id,  @Validated @ModelAttribute("updateProductForm")  UpdateProductForm updateProductForm, BindingResult bindingResult, Model model) {
+        model.addAttribute("productId", pgProductService.findById(id));
+        if(bindingResult.hasErrors()) {
+            return "update";
+        }
+        else{
+            var insertProduct = new ProductRecord(id,updateProductForm.getUpdateProductName(),updateProductForm.getUpdateProductPrice());
+            pgProductService.update(insertProduct);
+            return "redirect:/product-list";
+        }
     }
 
 }

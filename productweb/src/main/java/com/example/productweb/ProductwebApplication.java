@@ -1,5 +1,6 @@
 package com.example.productweb;
 
+import com.example.productweb.entity.InsertProduct;
 import com.example.productweb.service.ProductService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -16,6 +17,10 @@ public class ProductwebApplication {
 
 //		var products = productsService.findById(1); // IDが1のユーザーのみを取得
 //		System.out.println(products.id());
+
+//		var newProductsRecord = new InsertProduct("のり",100 );
+//		var products = productsService.insert(newProductsRecord);
+//		System.out.println(products);
 	}
 
 }

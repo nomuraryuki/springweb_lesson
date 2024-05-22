@@ -12,9 +12,11 @@
     </tr>
     <tr th:each="user : ${productList}">
         <td><a th:href="@{product/{id}(id=${user.id})}" >[[ ${user.id} ]]</a></td>
+<!--        <td><a th:href="@{http://localhost:8080/product/__${user.id}__}" th:text="${user.id}"></a></td>-->
         <td th:text="${user.name}"></td>
         <td th:text="${user.price}"></td>
     </tr>
 </table>
+<p><button type=“button” onclick="location.href='http://localhost:8080/product-add'">新規追加</button></p>
 </body>
 </html>
