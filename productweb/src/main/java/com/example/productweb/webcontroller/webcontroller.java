@@ -33,12 +33,20 @@ public class webcontroller {
             return "product";
     }
 
-    @PostMapping("product/{id}")
-    public String productDelete(@PathVariable("id")int id,Model model) {
+    @PostMapping("/product/{id}")
+    public String productDelete(@PathVariable("id") int id,@ModelAttribute("updateProductForm")  UpdateProductForm updateProductForm,Model model) {
         model.addAttribute("productId", pgProductService.findById(id));
-            pgProductService.delete(id);
+        System.out.println(id);
+        pgProductService.delete(id);
+
             return "redirect:/product-list";
     }
+
+//    @RequestMapping(value = "product/{id}", params = "delete", method = RequestMethod.POST)
+//    public String delete(@PathVariable("id")int id,Model model) {
+//        pgProductService.delete(id);
+//        return "redirect:/product-list";
+//    }
 
     @GetMapping("/product-add")
     public String index(@ModelAttribute("addProductForm") AddProductForm addProductForm) {

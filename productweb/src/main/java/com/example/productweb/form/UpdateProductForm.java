@@ -18,4 +18,6 @@ public class UpdateProductForm {
     @Range(min=0, max=Integer.MAX_VALUE)
     @NotNull
     private Integer updateProductPrice;
+
+    private Integer id;
 }
