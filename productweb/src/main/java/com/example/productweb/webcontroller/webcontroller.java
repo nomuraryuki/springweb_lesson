@@ -42,12 +42,6 @@ public class webcontroller {
             return "redirect:/product-list";
     }
 
-//    @RequestMapping(value = "product/{id}", params = "delete", method = RequestMethod.POST)
-//    public String delete(@PathVariable("id")int id,Model model) {
-//        pgProductService.delete(id);
-//        return "redirect:/product-list";
-//    }
-
     @GetMapping("/product-add")
     public String index(@ModelAttribute("addProductForm") AddProductForm addProductForm) {
         return "product-add";
@@ -59,7 +53,7 @@ public class webcontroller {
             return "product-add";
         }
         else{
-            var insertProduct = new InsertProduct(addProductForm.getAddProductName(),addProductForm.getAddProductPrice());
+            var insertProduct = new InsertProduct(addProductForm.getAddProductName(),Integer.parseInt(addProductForm.getAddProductPrice()));
             pgProductService.insert(insertProduct);
             return "redirect:/product-list";
         }
@@ -68,6 +62,9 @@ public class webcontroller {
     @GetMapping("product/update/{id}")
     public String update(@PathVariable("id") int id, @ModelAttribute("updateProductForm")UpdateProductForm updateProductForm, Model model){
         model.addAttribute("productId", pgProductService.findById(id));
+        ProductRecord productRecord =pgProductService.findById(id);
+        updateProductForm.setUpdateProductPrice(String.valueOf(productRecord.price()));
+        updateProductForm.setUpdateProductName(productRecord.name());
         return "update";
     }
 
@@ -78,10 +75,16 @@ public class webcontroller {
             return "update";
         }
         else{
-            var insertProduct = new ProductRecord(id,updateProductForm.getUpdateProductName(),updateProductForm.getUpdateProductPrice());
+            var insertProduct = new ProductRecord(id,updateProductForm.getUpdateProductName(),Integer.parseInt(updateProductForm.getUpdateProductPrice()));
             pgProductService.update(insertProduct);
             return "redirect:/product-list";
         }
     }
+
+    @GetMapping("/product-management")
+    public String management(Model model) {
+        return "product-management";
+    }
+
 
 }

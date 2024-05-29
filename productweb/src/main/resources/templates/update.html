@@ -15,7 +15,7 @@
     <form th:action="@{{id}(id=${productId.id()})}" method="post" th:object="${updateProductForm}">
 
         <p>id：[[ ${productId.id()} ]]</p>
-        <p>商品名：<input type="text" th:field="*{updateProductName}" ></p>
+        <p>商品名：<input type="text"  th:field="*{updateProductName}" ></p>
         <div class="error" th:each="error: ${#fields.errors('updateProductName')}">
             [[ ${error} ]]
         </div>
@@ -26,7 +26,8 @@
         </div>
 
         <p><button type="submit">更新</button></p>
-    </form>
 
+    </form>
+<p><button type=“button” onclick="location.href='http://localhost:8080/product-list'">商品一覧</button></p>
 </body>
 </html>

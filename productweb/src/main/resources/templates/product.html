@@ -3,18 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <title>商品詳細</title>
+    <link rel="stylesheet" th:href="@{/css/product_style.css}">
 </head>
 <body>
-<h1>商品詳細</h1>
+    <h1>商品詳細</h1>
 
-<table>
-    <tr><td>id：[[ ${productId.id()} ]]</td></tr>
-    <tr><td>名前：[[ ${productId.name()} ]]</td></tr>
-    <tr><td>値段：[[ ${productId.price()} ]]</td></tr>
-</table>
-<form th:action="@{/product/{id}(id=${productId.id()})}" method="post" >
-<input type="submit" name="delete" value="削除" />
-</form>
+    <table>
+        <tr><td>id：[[ ${productId.id()} ]]</td></tr>
+        <tr><td>名前：[[ ${productId.name()} ]]</td></tr>
+        <tr><td>値段：[[ ${productId.price()} ]]</td></tr>
+    </table>
 
+
+    <!--<form method="post">-->
+    <!--    <button th:formaction="@{http://localhost:8080/product/update/{id}(id=${productId.id()})}">修正</button>-->
+    <!--    <button th:formaction="@{http://localhost:8080/product/{id}(id=${productId.id()})}">削除</button>-->
+    <!--</form>-->
+    <div class="btn_position">
+        <form th:action="@{/product/{id}(id=${productId.id()})}" method="post" >
+            <input type="submit" name="delete" value="削除" />
+        </form>
+        <a th:href="@{/product/update/{id}(id=${productId.id()})}">
+            <button type="button">修正</button>
+        </a>
+    </div>
+    <p><button type=“button” onclick="location.href='http://localhost:8080/product-list'">商品一覧</button></p>
 </body>
 </html>

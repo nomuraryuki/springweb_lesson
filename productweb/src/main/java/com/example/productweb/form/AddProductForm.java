@@ -8,15 +8,14 @@ import org.springframework.format.annotation.NumberFormat;
 @Data
 public class AddProductForm {
 
-    @NotEmpty(message = "商品名は必須入力です")
-    @Length(min = 1, max = 50)
+    @NotEmpty(message = "{Product.Name.Null}")
+    @Length(min = 1, max = 50 ,message="{Product.Name.length}")
     private String addProductName;
 
 
 //    @Digits(integer = 2147483647, fraction = 0)
-    @NotNull
-    @Max(value = Integer.MAX_VALUE, message = "2147483647")
-    @Min(0)
-//    @Range(min=0, max=2147483647, message = "2147483647です")
-    private Integer  addProductPrice;
+    @NotEmpty(message = "{Product.Price.Null}")
+    @Range(min=0, max=2147483647, message = "{Product.Price.Range}")
+    @Positive(message = "{Product.Price.Positive}")
+    private String  addProductPrice;
 }

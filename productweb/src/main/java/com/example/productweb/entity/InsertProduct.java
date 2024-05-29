@@ -1,4 +1,16 @@
 package com.example.productweb.entity;
 
-public record InsertProduct(String name, int price) {
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.Range;
+
+public record InsertProduct(
+        @NotBlank(message = "{Product.Name.Null}")
+        @Length(min = 1, max = 50 ,message="{Product.Name.length}")
+        String name,
+
+//        @NotNull(message = "Product.Price.Null")
+        int price) {
 }
